@@ -10,31 +10,18 @@ from google.oauth2.service_account import Credentials
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 SERVICE_ACCOUNT_FILE = 'creds.json'
 CREDS = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-CALENDAR = GoogleCalendar("13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials = CREDS)
-
-event = Event(
-    'Breakfast',
-    start=(14/Sept/2021)[9:00],
-    end=(14/Sept/2021)[9:45],
-    event_id="12345"
-    )
+CALENDAR = GoogleCalendar("13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
 
 
-#CALENDAR.add_event(event)
-for events in CALENDAR:
-    print(events)
-#print(CALENDAR)
-#for event in CALENDAR:
-    #print(event)
-    #print(event.event_id)
+def main():
+    """
+    Runs main functions
+    """
+    for event in CALENDAR:
+        print(event)
 
-#CALENDAR.delete_event(event)
-#CALENDAR.clear()
-for events in CALENDAR:
-    print(events.id)
 
-test = CALENDAR.get_event("m11qcka9q75aei3eimordp6mq8")
-print(test)
-CALENDAR.delete_event(test)
-for events in CALENDAR:
-    print(events.id)
+print("Welcome to Kalendar")
+print("A Python-based Google Calendar Interface")
+print("Calendar URL: https://bit.ly/392Xz9R")
+main()
