@@ -26,17 +26,28 @@ def display_main_menu():
     print("* 5. Add event participants        *")
     print("* 6. Remove event participants     *")
     print("* 7. Clear calendar                *")
-    print("************************************")
+    print("************************************\n")
+
+
+def display_calendar():
+    """
+    Lists events in the calendar
+    """
+    event_count = 0
+    for event in CALENDAR:
+        print(event)
+        event_count += 1
+
+    if not event_count:
+        print("There are no events in the calendar.")
 
 
 def main():
     """
     Run main functions
     """
-    for event in CALENDAR:
-        print(event)
-
     display_main_menu()
+    display_calendar()
 
 
 print("Welcome to Kalendar")
