@@ -13,15 +13,33 @@ CREDS = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPE
 CALENDAR = GoogleCalendar("13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
 
 
+def display_main_menu():
+    """
+    Display main menu on screen
+    """
+    print("************MAIN MENU***************")
+    print("* Please make your selection below *")
+    print("* 1. Add a new event               *")
+    print("* 2. Remove an event               *")
+    print("* 3. Add a recurring event         *")
+    print("* 4. Remove a recurring event      *")
+    print("* 5. Add event participants        *")
+    print("* 6. Remove event participants     *")
+    print("* 7. Clear calendar                *")
+    print("************************************")
+
+
 def main():
     """
-    Runs main functions
+    Run main functions
     """
     for event in CALENDAR:
         print(event)
 
+    display_main_menu()
+
 
 print("Welcome to Kalendar")
-print("A Python-based Google Calendar Interface")
-print("Calendar URL: https://bit.ly/392Xz9R")
+print("A Python-based Google Calendar Interface\n")
+print("Calendar URL: https://bit.ly/392Xz9R\n")
 main()
