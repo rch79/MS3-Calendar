@@ -28,21 +28,8 @@ def display_main_menu():
     print("* 6. Add event participants        *")
     print("* 7. Remove event participants     *")
     print("* 8. Clear calendar                *")
+    print("* 9. Quit                          *")
     print("************************************\n")
-
-
-def display_calendar():
-    """
-    Lists events in the calendar
-    Display message if calendar is emptyu
-    """
-    event_count = 0
-    for event in CALENDAR:
-        print(event)
-        event_count += 1
-
-    if not event_count:
-        print("There are no events in the calendar.")
 
 
 def get_user_menu_option():
@@ -62,13 +49,46 @@ def get_user_menu_option():
             else:
                 return(user_selection)
 
+
+def activate_menu_option(selection):
+    """
+    Activate menu option based on
+    user selection
+    """
+    if selection == 1:
+        display_calendar()
+    else:
+        pass
+
+
+def display_calendar():
+    """
+    Lists events in the calendar
+    Display message if calendar is emptyu
+    """
+    event_count = 0
+    for event in CALENDAR:
+        print(event)
+        event_count += 1
+
+    if not event_count:
+        print("There are no events in the calendar.")
+    
+    input("\nPress any key to conrinue")
+
+
 def main():
     """
     Run main functions
     """
-    display_main_menu()
-    menu_option = get_user_menu_option()
-    print(menu_option)
+    while True:
+        display_main_menu()
+        menu_option = get_user_menu_option()
+        if menu_option == 9:
+            print("\nThank you for using Kalendar")
+            break
+        else:
+            activate_menu_option(menu_option)
 
 
 print("Welcome to Kalendar")
