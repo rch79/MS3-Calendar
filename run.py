@@ -19,19 +19,22 @@ def display_main_menu():
     """
     print("************MAIN MENU***************")
     print("* Please make your selection below *")
-    print("* 1. Add a new event               *")
-    print("* 2. Remove an event               *")
-    print("* 3. Add a recurring event         *")
-    print("* 4. Remove a recurring event      *")
-    print("* 5. Add event participants        *")
-    print("* 6. Remove event participants     *")
-    print("* 7. Clear calendar                *")
+    print("************************************")
+    print("* 1. Show events in calendar       *")
+    print("* 2. Add a new event               *")
+    print("* 3. Remove an event               *")
+    print("* 4. Add a recurring event         *")
+    print("* 5. Remove a recurring event      *")
+    print("* 6. Add event participants        *")
+    print("* 7. Remove event participants     *")
+    print("* 8. Clear calendar                *")
     print("************************************\n")
 
 
 def display_calendar():
     """
     Lists events in the calendar
+    Display message if calendar is emptyu
     """
     event_count = 0
     for event in CALENDAR:
@@ -42,12 +45,30 @@ def display_calendar():
         print("There are no events in the calendar.")
 
 
+def get_user_menu_option():
+    """
+    Get user selection of one of the main menu options
+    Returns an error message if user makes an invalid selection
+    """
+    menu_options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    while True:
+        try:
+            user_selection = int(input('Please type your selection (1 - 9): \n'))
+        except ValueError:
+            print("Invalid selection!!!!!")
+        else:
+            if user_selection not in menu_options:
+                print("Invalid selection!!!")
+            else:
+                return(user_selection)
+
 def main():
     """
     Run main functions
     """
     display_main_menu()
-    display_calendar()
+    menu_option = get_user_menu_option()
+    print(menu_option)
 
 
 print("Welcome to Kalendar")
