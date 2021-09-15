@@ -38,16 +38,17 @@ def get_user_menu_option():
     Returns an error message if user makes an invalid selection
     """
     menu_options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    while True:
+    user_selection = ""
+
+    while user_selection not in menu_options:
         try:
             user_selection = int(input('Please type your selection (1 - 9): \n'))
+            if user_selection not in menu_options:
+                print("Please select a valid menu option")
         except ValueError:
             print("Invalid selection!!!!!")
-        else:
-            if user_selection not in menu_options:
-                print("Invalid selection!!!")
-            else:
-                return(user_selection)
+
+    return(user_selection)
 
 
 def activate_menu_option(selection):
