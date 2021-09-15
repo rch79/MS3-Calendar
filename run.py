@@ -15,7 +15,7 @@ CALENDAR = GoogleCalendar("13mu09pc1s201mq40c0e51uics@group.calendar.google.com"
 
 def display_main_menu():
     """
-    Display main menu on screen
+    Display main menu on the screen
     """
     print("************MAIN MENU***************")
     print("* Please make your selection below *")
@@ -57,6 +57,10 @@ def activate_menu_option(selection):
     """
     if selection == 1:
         display_calendar()
+    elif selection == 2:
+        add_new_event()
+    elif selection == 3:
+        get_year_from_user()
     else:
         pass
 
@@ -73,9 +77,42 @@ def display_calendar():
 
     if not event_count:
         print("There are no events in the calendar.")
-    
+
     input("\nPress any key to conrinue")
 
+
+def get_year_from_user():
+    """
+    Get year from user
+    year must be equal to or higher than current year
+    maximum valid year equals current year + 99 years
+    """
+    MIN_YEAR = D.today().year  # Min valid year is current year
+    MAX_YEAR = MIN_YEAR + 99  # Max valid year is current year + 100
+    year = 0
+
+    while year not in range(MIN_YEAR, MAX_YEAR):
+        try:
+            year = int(input("Please enter the year of the event: \n"))
+            if year not in range(MIN_YEAR, MAX_YEAR):
+                print("Please choose a year equal to or higher than the "
+                      "current year\n")
+        except ValueError:
+            print("Invalid selection!!!")
+
+    print(year)
+    input("Press any key to continue")
+    return year
+
+
+#def test_function():
+ #   event = Event(
+ #   'Breakfast',
+ #   start=(22/Feb/2021)[9:00],
+ #   end=(12/Sept/2020)[9:45],
+ #   )
+
+ #   CALENDAR.add_event(event)
 
 def main():
     """
@@ -85,7 +122,7 @@ def main():
         display_main_menu()
         menu_option = get_user_menu_option()
         if menu_option == 9:
-            print("\nThank you for using Kalendar")
+            print("\nThank you for using Kalendar.")
             break
         else:
             activate_menu_option(menu_option)
