@@ -94,12 +94,13 @@ def get_year_from_user():
 
     while year not in range(MIN_YEAR, MAX_YEAR):
         try:
-            year = int(input("Please enter the year of the event: \n"))
+            year = int(input("Please enter the year of the event "
+                             "in the YYYY format: \n"))
             if year not in range(MIN_YEAR, MAX_YEAR):
-                print("Please choose a year equal to or higher than the "
+                print("The year must be equal to or higher than the "
                       "current year\n")
         except ValueError:
-            print("Invalid selection!!!")
+            print("You must enter a valid number in the YYYY format\n")
 
     print(year)
     input("Press any key to continue")
