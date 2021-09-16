@@ -1,5 +1,6 @@
 import gcsa
 from beautiful_date import *
+import datetime
 from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
 from gcsa.recurrence import Recurrence, DAILY, SU, SA
@@ -28,6 +29,10 @@ def display_main_menu():
     print("* 6. Add event participants        *")
     print("* 7. Remove event participants     *")
     print("* 8. Clear calendar                *")
+    print("* 84. Test get_year_function       *")
+    print("* 85. Test get_month function      *")
+    print("* 87. Test get_time function       *")
+    print("* 88. Add test event               *")
     print("* 9. Quit                          *")
     print("************************************\n")
 
@@ -37,7 +42,7 @@ def get_user_menu_option():
     Get user selection of one of the main menu options
     Returns an error message if user makes an invalid selection
     """
-    menu_options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    menu_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 84, 85, 86, 87, 88]
     user_selection = ""
 
     while user_selection not in menu_options:
@@ -60,8 +65,15 @@ def activate_menu_option(selection):
         display_calendar()
     elif selection == 2:
         add_new_event()
-    elif selection == 3:
+    elif selection == 84:
+        get_year_from_user()
+    elif selection == 85:
         get_month_from_user()
+    elif selection == 87:
+        get_time_from_user()
+    elif selection == 88:
+        add_test_event()
+        
     else:
         pass
 
@@ -136,18 +148,49 @@ def get_month_from_user():
         except ValueError:
                 print("Please choose a number from 1 to 12\n")
 
+
+def get_time_from_user():
+    """
+    Get time from user
+    """
+
+    try:
+        time_str = input("Please enter the event time in HH:MM format:\n")
+        time_str = time_str.split(":")
+        print(time_str)
+        print(len(time_str))
+        input("PK")
+
+        if len(time_str) != 2:
+            print("Please use the correct format HH:MM")
+        else:
+            event__time = datetime.time(int(time_str[0]), int(time_str[1]))
+
+    except ValueError:
+        print("Please enter a valid time")
+
+    print(event__time)
+    input("Press any key to continue")
+    return event__time
+
+
+        
+            
+
+
     print(month)
     input("Press any key to continue")
     return month
-            
-#def test_function():
- #   event = Event(
- #   'Breakfast',
- #   start=(22/Feb/2021)[9:00],
- #   end=(12/Sept/2020)[9:45],
- #   )
 
- #   CALENDAR.add_event(event)
+
+def add_test_event():
+    event = Event(
+    'Breakfast',
+    start=(22/Feb/2021)[9:00],
+    end=(12/Sept/2020)[9:45],
+    )
+
+    CALENDAR.add_event(event)
 
 def main():
     """
