@@ -76,7 +76,7 @@ def activate_menu_option(selection):
     elif selection == 84:
         get_date_from_user("start")
     elif selection == 85:
-        get_time_from_user()
+        get_time_from_user("start")
     elif selection == 86:
         pass
     else:
@@ -85,8 +85,9 @@ def activate_menu_option(selection):
 
 def display_calendar():
     """
-    Lists events in the calendar
-    Display message if calendar is emptyu
+    Lists upcoming events in the calendar
+    Display message if calendar is empty
+    Past events will not be shown
     """
     event_count = 0
     for event in CALENDAR:
@@ -103,6 +104,7 @@ def get_date_from_user(start_or_end):
     """
     Get event date from user
     Displays error message if date is invalid
+    Takes a string as a parameter to display correct message
     """
     is_date_valid = False
     yes_or_no = ""
@@ -137,32 +139,24 @@ def get_date_from_user(start_or_end):
     return chosen_date
 
 
-def get_time_from_user():
+def get_time_from_user(start_or_end):
     """
-    Get time from user
+    Get time from user in HH:MM 24h format
     """
+    is_valid_time = False
 
-    try:
-        time_str = input("Please enter the event time in HH:MM 24h format:\n")
-        time_str = time_str.split(":")
-        print(time_str)
-        print(len(time_str))
-        input("PK")
-
-        if len(time_str) != 2:
-            print("Please use the correct format HH:MM")
+    while not is_valid_time:
+        try:
+            time_str = input(f"Please enter the event {start_or_end} time in HH:MM 24h format:\n")
+            time_list = time_str.split(":")
+            time_list = [int(num) for num in time_list]
+            chosen_time = datetime.time(time_list[0], time_list[1])
+        except ValueError:
+            print("Please enter a valid time in the HH:MM format")
         else:
-            event__time = datetime.time(int(time_str[0]), int(time_str[1]))
-
-    except ValueError:
-        print("Please enter a valid time")
-
-    print(event__time)
-    input("Press any key to continue")
-    return event__time
-
-
-
+            print(chosen_time)
+            input("Press any key to continue")
+            is_valid_time = True
 
 
 """ def add_test_event():
