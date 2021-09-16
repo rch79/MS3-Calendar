@@ -61,7 +61,7 @@ def activate_menu_option(selection):
     elif selection == 2:
         add_new_event()
     elif selection == 3:
-        get_year_from_user()
+        get_month_from_user()
     else:
         pass
 
@@ -107,6 +107,39 @@ def get_year_from_user():
     return year
 
 
+def get_month_from_user():
+    """
+    Get month from user
+    """
+    month = 0
+
+    while month not in range (1,13):
+        try:
+            print("Event Month: ")
+            print("1 - January")
+            print("2 - February")
+            print("3 - March")
+            print("4 - April")
+            print("5 - May")
+            print("6 - June")
+            print("7 - July")
+            print("8 - August")
+            print("9 - September")
+            print("10 - October")
+            print("11 - November")
+            print("12 - December")
+            month = int(input("\nPlease make your selection (1 - 12"))
+
+            if month not in range(1, 13):
+                print("Please choose a number from 1 to 12")
+
+        except ValueError:
+                print("Please choose a number from 1 to 12")
+    
+    print(month)
+    input("Press any key to continue")
+    return month
+            
 #def test_function():
  #   event = Event(
  #   'Breakfast',
