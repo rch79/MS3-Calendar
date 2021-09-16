@@ -128,14 +128,14 @@ def get_month_from_user():
             print("10 - October")
             print("11 - November")
             print("12 - December")
-            month = int(input("\nPlease make your selection (1 - 12"))
+            month = int(input("\nPlease make your selection (1 - 12)\n"))
 
             if month not in range(1, 13):
-                print("Please choose a number from 1 to 12")
+                print("Please choose a number from 1 to 12\n")
 
         except ValueError:
-                print("Please choose a number from 1 to 12")
-    
+                print("Please choose a number from 1 to 12\n")
+
     print(month)
     input("Press any key to continue")
     return month
