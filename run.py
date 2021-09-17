@@ -72,7 +72,7 @@ def activate_menu_option(selection):
     if selection == 1:
         display_calendar()
     elif selection == 2:
-        pass
+        add_new_event()
     elif selection == 84:
         get_date_from_user("start")
     elif selection == 85:
@@ -154,10 +154,30 @@ def get_time_from_user(start_or_end):
         except ValueError:
             print("Please enter a valid time in the HH:MM format")
         else:
-            print(chosen_time)
-            input("Press any key to continue")
             is_valid_time = True
 
+    return chosen_time
+
+
+def add_new_event():
+    event_name = input("Please eneter the name of the event: \n")
+    event_start_date = get_date_from_user("start")
+    event_end_date = get_date_from_user("end")
+    event_start_time = get_time_from_user("start")
+    event_end_time = get_time_from_user("end")
+
+    event_start_datetime = datetime.datetime.combine(event_start_date, event_start_time)
+    event_end_datetime = datetime.datetime.combine(event_end_date, event_end_time)
+
+    new_event = Event(
+                    event_name,
+                    start=event_start_datetime,
+                    end=event_end_datetime
+                     )
+
+    print("\nAdding event")
+    CALENDAR.add_event(new_event)
+    input("\nEvent added succesfully. Press any key to continue")
 
 """ def add_test_event():
     event = Event(
