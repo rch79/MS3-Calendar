@@ -1,5 +1,4 @@
 import gcsa
-from beautiful_date import *
 import datetime
 from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
@@ -13,12 +12,6 @@ SERVICE_ACCOUNT_FILE = 'creds.json'
 CREDS = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE,
                                               scopes=SCOPES)
 CALENDAR = GoogleCalendar("13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
-
-month_dictionary = {1: "January", 2: "February", 3: "March", 4: "April",
-                    5: "May", 6: "June", 7: "July", 8: "August",
-                    9: "September", 10: "October", 11: "November",
-                    12: "December"}
-
 
 def display_main_menu():
     """
@@ -85,7 +78,7 @@ def activate_menu_option(selection):
 
 def display_calendar():
     """
-    Lists upcoming events in the calendar
+    List upcoming events in the calendar
     Display message if calendar is empty
     Past events will not be shown
     """
@@ -126,9 +119,9 @@ def get_date_from_user(start_or_end):
             print("Invalid date")
         else:
             print(
-                  f"\nThe date you selected is {date_list[0]} "
-                  f"{month_dictionary[date_list[1]]}, {date_list[2]}"
-                  )
+                  f"\nThe date you selected is "
+                  f"{chosen_date.strftime('%A, %B %d %Y')}"
+                )
 
             while yes_or_no not in ["Y", "y", "n", "N"]:
                 yes_or_no = input("\nIs that correct (Y/N)? \n")
@@ -160,6 +153,10 @@ def get_time_from_user(start_or_end):
 
 
 def add_new_event():
+    """
+    Create a new event based on start and end date and time
+    provided by user and add it to the Google calendar
+    """
     event_name = input("Please eneter the name of the event: \n")
     event_start_date = get_date_from_user("start")
     event_end_date = get_date_from_user("end")
@@ -193,7 +190,6 @@ def add_new_event():
         ],
         minutes_before_email_reminder=50
 ) """
-
 
 
 def main():
