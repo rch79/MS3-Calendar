@@ -69,10 +69,8 @@ def get_user_menu_option():
 
     while user_selection not in menu_options:
         try:
-            user_selection = int(input(
-                                        "Please type your "
-                                        "selection (1 - 9): \n"
-                                        ))
+            user_selection = int(input("Please type your "
+                                       "selection (1 - 9): \n"))
             if user_selection not in menu_options:
                 print("Please select a valid menu option")
         except ValueError:
@@ -100,23 +98,33 @@ def activate_menu_option(selection):
         pass
 
 
-def print_event_details(index, id):
+def print_event_details(type, index, id):
     """
-    Formats and displays an event in the calendar
+    Formats and prints the details of an event
+    in the calendar.
     """
     event_id = id
     idx = index
     event = CALENDAR.get_event(event_id)
-    event_start_str = event.start.strftime("%a, %b %d %Y at %H:%M")
-    event_end_str = event.end.strftime("%a, %b %d %Y at %H:%M")
 
-    print("********************************"
-          "**********************************")
-    print(f"{idx} - {event.summary}")
-    print(f"Start: {event_start_str}")
-    print(f"End:   {event_end_str}")
-    print("********************************"
-          "**********************************\n\n")
+    if type == "full_detail":
+        event_start_str = event.start.strftime("%a, %b %d %Y at %H:%M")
+        event_end_str = event.end.strftime("%a, %b %d %Y at %H:%M")
+
+        print("********************************"
+              "**********************************")
+        print(f"{idx} - {event.summary}")
+        print(f"Start: {event_start_str}")
+        print(f"End:   {event_end_str}")
+        print("********************************"
+              "**********************************\n\n")
+
+    if type == "low_detail":
+        event_start_str = event.start.strftime("%d %b %y at %H:%M")
+        event_end_str = event.end.strftime("%d %b %y at %H:%M")
+
+        print(f"{idx}: {event.summary}, "
+              f"from {event_start_str} to {event_end_str}")
 
 
 def display_calendar(dictionary):
@@ -138,7 +146,7 @@ def display_calendar(dictionary):
             print(f"There are {number_of_events} events in your calendar\n\n")
 
         for idx, event in enumerate(CALENDAR, start=1):
-            print_event_details(idx, event.id)
+            print_event_details("low_detail", idx, event.id)
 
             # Requires user input after two events are displayed to
             # show additional events, unless last event is being shown
@@ -161,10 +169,8 @@ def get_date_from_user(start_or_end):
         yes_or_no = ""  # resets yes_or_no variable
 
         try:
-            date_str = input(
-                             f"Please enter the {start_or_end} date "
-                             "in MM-DD-YYYY format: \n"
-                             )
+            date_str = input(f"Please enter the {start_or_end} date "
+                             "in MM-DD-YYYY format: \n")
             date_list = date_str.split("-")
             date_list = [int(string) for string in date_list]
             chosen_date = datetime.date(date_list[2],
@@ -173,10 +179,8 @@ def get_date_from_user(start_or_end):
         except ValueError:
             print("Invalid date")
         else:
-            print(
-                  f"\nThe date you selected is "
-                  f"{chosen_date.strftime('%A, %B %d %Y')}"
-                )
+            print(f"\nThe date you selected is "
+                  f"{chosen_date.strftime('%A, %B %d %Y')}")
 
             while yes_or_no not in ["Y", "y", "n", "N"]:
                 yes_or_no = input("\nIs that correct (Y/N)? \n")
@@ -230,20 +234,6 @@ def add_new_event():
     CALENDAR.add_event(new_event)
     input("\nEvent added succesfully. Press any key to continue")
 
-""" def add_test_event():
-    event = Event(
-        'Breakfast',
-        start=(1 / Jan / 2019)[9:00],
-        recurrence=[
-            Recurrence.rule(freq=DAILY),
-            Recurrence.exclude_rule(by_week_day=[SU, SA]),
-            Recurrence.exclude_times([
-                (19 / Apr / 2019)[9:00],
-                (22 / Apr / 2019)[9:00]
-            ])
-        ],
-        minutes_before_email_reminder=50
-) """
 
 event_id_dict = build_event_id_dictionary()
 
