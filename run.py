@@ -11,7 +11,22 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 SERVICE_ACCOUNT_FILE = 'creds.json'
 CREDS = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE,
                                               scopes=SCOPES)
-CALENDAR = GoogleCalendar("13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
+CALENDAR = GoogleCalendar(
+    "13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
+
+
+def build_event_id_dictionary():
+    """
+    Collects list of upcoming events in the Google
+    calendar and stores their unique event ids in a
+    dictionary for manipulation purposes
+    """
+    event_id_dictionary = {}
+    for idx, event in enumerate(CALENDAR, start=1):
+        event_id_dictionary[idx] = event.id
+
+    return event_id_dictionary
+
 
 def display_main_menu():
     """
@@ -28,7 +43,7 @@ def display_main_menu():
     print("* 6. Add event participants        *")
     print("* 7. Remove event participants     *")
     print("* 8. Clear calendar                *")
-    print("* 84. Test get_date function       *")
+    print("* 84. Test get event dictionary fc *")
     print("* 85. Test get_time function       *")
     print("* 86. Add test event               *")
     print("* 9. Quit                          *")
@@ -67,7 +82,7 @@ def activate_menu_option(selection):
     elif selection == 2:
         add_new_event()
     elif selection == 84:
-        get_date_from_user("start")
+        build_event_id_dictionary()
     elif selection == 85:
         get_time_from_user("start")
     elif selection == 86:
