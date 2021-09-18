@@ -1,5 +1,6 @@
 import gcsa
 import datetime
+from datetime import datetime
 from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
 from gcsa.recurrence import Recurrence, DAILY, SU, SA
@@ -78,7 +79,7 @@ def activate_menu_option(selection):
     user selection
     """
     if selection == 1:
-        display_calendar()
+        display_calendar(event_id_dict)
     elif selection == 2:
         add_new_event()
     elif selection == 84:
@@ -91,21 +92,45 @@ def activate_menu_option(selection):
         pass
 
 
-def display_calendar():
+def display_calendar(dictionary):
     """
     List upcoming events in the calendar
     Display message if calendar is empty
     Past events will not be shown
     """
-    event_count = 0
-    for event in CALENDAR:
-        print(event)
-        event_count += 1
+    event_id_dictionary = dictionary
+    number_of_events = len(event_id_dictionary)
 
-    if not event_count:
-        print("There are no events in the calendar.")
+    # Taylors message according to number of events in the calendar
+    if number_of_events == 0:
+        print("There are no upcoming events in the dictionary")
+    else:
+        if number_of_events == 1:
+            print("There is 1 upcoming event in your calendar: \n\n")
+        else:
+            print(f"There are {number_of_events} events in your calendar\n\n")
 
-    input("\nPress any key to conrinue")
+        # Formats and displays each event in the calendar
+        # datetime objects are formatted using datetime.strftime method
+        for idx, event_id in enumerate(event_id_dictionary, start=1):
+            event = CALENDAR.get_event(event_id_dictionary[idx])
+            event_start_str = event.start.strftime("%a, %b %d %Y at %H:%M")
+            event_end_str = event.end.strftime("%a, %b %d %Y at %H:%M")
+
+            print("********************************"
+                  "**********************************")
+            print(f"{idx} - {event.summary}")
+            print(f"Start: {event_start_str}")
+            print(f"End:   {event_end_str}")
+            print("********************************"
+                  "**********************************\n\n")
+
+            # Requires user input after two events are displayed to
+            # show additional events, unless last event is being shown
+            if idx % 2 == 0 and idx != number_of_events:
+                input("Press any key to show additional events")
+
+    input("Press any key to go back to the main menu")
 
 
 def get_date_from_user(start_or_end):
@@ -205,6 +230,8 @@ def add_new_event():
         ],
         minutes_before_email_reminder=50
 ) """
+
+event_id_dict = build_event_id_dictionary()
 
 
 def main():
