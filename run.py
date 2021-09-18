@@ -88,6 +88,8 @@ def activate_menu_option(selection):
         display_calendar(event_id_dict)
     elif selection == 2:
         add_new_event()
+    elif selection == 3:
+        remove_event()
     elif selection == 84:
         build_event_id_dictionary()
     elif selection == 85:
@@ -238,6 +240,43 @@ def add_new_event():
     input("\nEvent added succesfully. Press any key to continue")
 
     event_id_dict = build_event_id_dictionary()
+
+
+def remove_event():
+    global event_id_dict
+    number_of_events = len(event_id_dict)
+    user_input = ""
+    yes_or_no = ""
+
+    while True:
+        print(f"There are {number_of_events} events in the calendar: \n")
+        for idx, event in enumerate(CALENDAR, start=1):
+            print_event_details("low_detail", idx, event_id_dict[idx])
+
+        try:
+            user_input = int(input(f"Please select the event to be deleted (1-{number_of_events}))"))
+            if user_input not in range(1, number_of_events + 1):
+                print("Invalid selection!")
+        except ValueError:
+            print("Invalid selection!")
+        else:
+            while yes_or_no not in ["Y", "y", "N", "n"]:
+                print("\nThe following event will be deleted: ")
+                print_event_details("full_detail", user_input, event_id_dict[user_input])
+                yes_or_no = input("\nPlease confirm your selection (Y/N)")
+
+            if yes_or_no in ["Y", "y"]:
+                print("Deleting event")
+                event = CALENDAR.get_event(event_id_dict[user_input])
+                CALENDAR.delete_event(event)
+                event_id_dict = build_event_id_dictionary()
+                print("Event successfully deleted")
+                break
+            else:
+                break
+
+
+
 
 
 event_id_dict = build_event_id_dictionary()
