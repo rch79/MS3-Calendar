@@ -10,21 +10,29 @@ from google.oauth2.service_account import Credentials
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 SERVICE_ACCOUNT_FILE = 'creds.json'
-CREDS = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE,
-                                              scopes=SCOPES)
+CREDS = Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 CALENDAR = GoogleCalendar(
     "13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
 
 
 def build_event_id_dictionary():
     """
-    Collects list of upcoming events in the Google
-    calendar and stores their unique event ids in a
-    dictionary for manipulation purposes
+    Retrieves unique event ids and event start dates from Google
+    calendar, sorts list in cronological order, and add unique event
+    ids to a dictionary
     """
     event_id_dictionary = {}
-    for idx, event in enumerate(CALENDAR, start=1):
-        event_id_dictionary[idx] = event.id
+    event_id_list = []
+
+    for event in CALENDAR:
+        event_id_list.append((event.start, event.id))
+
+    event_id_list.sort()  # sort event list in cronological order
+
+    # key values will be assigned in chronological order
+    for idx, event in enumerate(event_id_list):
+        event_id_dictionary[idx + 1] = event_id_list[idx][1]
 
     return event_id_dictionary
 
@@ -92,6 +100,25 @@ def activate_menu_option(selection):
         pass
 
 
+def print_event_details(index, id):
+    """
+    Formats and displays an event in the calendar
+    """
+    event_id = id
+    idx = index
+    event = CALENDAR.get_event(event_id)
+    event_start_str = event.start.strftime("%a, %b %d %Y at %H:%M")
+    event_end_str = event.end.strftime("%a, %b %d %Y at %H:%M")
+
+    print("********************************"
+          "**********************************")
+    print(f"{idx} - {event.summary}")
+    print(f"Start: {event_start_str}")
+    print(f"End:   {event_end_str}")
+    print("********************************"
+          "**********************************\n\n")
+
+
 def display_calendar(dictionary):
     """
     List upcoming events in the calendar
@@ -110,20 +137,8 @@ def display_calendar(dictionary):
         else:
             print(f"There are {number_of_events} events in your calendar\n\n")
 
-        # Formats and displays each event in the calendar
-        # datetime objects are formatted using datetime.strftime method
-        for idx, event_id in enumerate(event_id_dictionary, start=1):
-            event = CALENDAR.get_event(event_id_dictionary[idx])
-            event_start_str = event.start.strftime("%a, %b %d %Y at %H:%M")
-            event_end_str = event.end.strftime("%a, %b %d %Y at %H:%M")
-
-            print("********************************"
-                  "**********************************")
-            print(f"{idx} - {event.summary}")
-            print(f"Start: {event_start_str}")
-            print(f"End:   {event_end_str}")
-            print("********************************"
-                  "**********************************\n\n")
+        for idx, event in enumerate(CALENDAR, start=1):
+            print_event_details(idx, event.id)
 
             # Requires user input after two events are displayed to
             # show additional events, unless last event is being shown
@@ -203,14 +218,13 @@ def add_new_event():
     event_start_time = get_time_from_user("start")
     event_end_time = get_time_from_user("end")
 
-    event_start_datetime = datetime.datetime.combine(event_start_date, event_start_time)
-    event_end_datetime = datetime.datetime.combine(event_end_date, event_end_time)
+    event_start_datetime = datetime.datetime.combine(
+        event_start_date, event_start_time)
+    event_end_datetime = datetime.datetime.combine(
+        event_end_date, event_end_time)
 
     new_event = Event(
-                    event_name,
-                    start=event_start_datetime,
-                    end=event_end_datetime
-                     )
+        event_name, start=event_start_datetime, end=event_end_datetime)
 
     print("\nAdding event")
     CALENDAR.add_event(new_event)
