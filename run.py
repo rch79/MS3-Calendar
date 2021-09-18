@@ -1,6 +1,6 @@
 import gcsa
 import datetime
-from datetime import datetime
+#from datetime import datetime
 from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
 from gcsa.recurrence import Recurrence, DAILY, SU, SA
@@ -146,7 +146,7 @@ def display_calendar(dictionary):
             print(f"There are {number_of_events} events in your calendar\n\n")
 
         for idx, event in enumerate(CALENDAR, start=1):
-            print_event_details("low_detail", idx, event.id)
+            print_event_details("full_detail", idx, event_id_dictionary[idx])
 
             # Requires user input after two events are displayed to
             # show additional events, unless last event is being shown
@@ -170,7 +170,7 @@ def get_date_from_user(start_or_end):
 
         try:
             date_str = input(f"Please enter the {start_or_end} date "
-                             "in MM-DD-YYYY format: \n")
+                             "in DD-MM-YYYY format: \n")
             date_list = date_str.split("-")
             date_list = [int(string) for string in date_list]
             chosen_date = datetime.date(date_list[2],
@@ -199,7 +199,8 @@ def get_time_from_user(start_or_end):
 
     while not is_valid_time:
         try:
-            time_str = input(f"Please enter the event {start_or_end} time in HH:MM 24h format:\n")
+            time_str = input(f"Please enter the event {start_or_end} "
+                             "time in HH:MM 24h format:\n")
             time_list = time_str.split(":")
             time_list = [int(num) for num in time_list]
             chosen_time = datetime.time(time_list[0], time_list[1])
@@ -214,8 +215,10 @@ def get_time_from_user(start_or_end):
 def add_new_event():
     """
     Create a new event based on start and end date and time
-    provided by user and add it to the Google calendar
+    provided by user and add it to the Google calendar, and
+    generates a new event id dictionary including the new event
     """
+    global event_id_dict
     event_name = input("Please eneter the name of the event: \n")
     event_start_date = get_date_from_user("start")
     event_end_date = get_date_from_user("end")
@@ -233,6 +236,8 @@ def add_new_event():
     print("\nAdding event")
     CALENDAR.add_event(new_event)
     input("\nEvent added succesfully. Press any key to continue")
+
+    event_id_dict = build_event_id_dictionary()
 
 
 event_id_dict = build_event_id_dictionary()
