@@ -1,11 +1,9 @@
 import gcsa
 import datetime
-#from datetime import datetime
-from gcsa.event import Event, Attendee
+from gcsa.event import Event  # , Attendee
 from gcsa.google_calendar import GoogleCalendar
-from gcsa.recurrence import Recurrence, DAILY, SU, SA
+# from gcsa.recurrence import Recurrence, DAILY, SU, SA
 from google.oauth2.service_account import Credentials
-#from google.oauth2 import service_account
 
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -48,14 +46,14 @@ def display_main_menu():
     print("* 1. Show events in calendar       *")
     print("* 2. Add a new event               *")
     print("* 3. Remove an event               *")
-    print("* 4. Add a recurring event         *")
-    print("* 5. Remove a recurring event      *")
-    print("* 6. Add event participants        *")
-    print("* 7. Remove event participants     *")
+    # print("* 4. Add a recurring event         *")
+    # print("* 5. Remove a recurring event      *")
+    # print("* 6. Add event participants        *")
+    # print("* 7. Remove event participants     *")
     print("* 8. Clear calendar                *")
-    print("* 84. Test get event dictionary fc *")
-    print("* 85. Test get_time function       *")
-    print("* 86. Add test event               *")
+    # print("* 84. Test get event dictionary fc *")
+    # print("* 85. Test get_time function       *")
+    # print("* 86. Add test event               *")
     print("* 9. Quit                          *")
     print("************************************\n")
 
@@ -65,7 +63,7 @@ def get_user_menu_option():
     Get user selection of one of the main menu options
     Returns an error message if user makes an invalid selection
     """
-    menu_options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 84, 85, 86]
+    menu_options = [1, 2, 3, 8, 9]
     user_selection = ""
 
     while user_selection not in menu_options:
@@ -86,21 +84,21 @@ def activate_menu_option(selection):
     user selection
     """
     if selection == 1:
-        display_calendar(event_id_dict)
+        display_calendar()
     elif selection == 2:
         add_new_event()
     elif selection == 3:
         remove_event()
-    elif selection == 6:
-        add_participants()
+    # elif selection == 6:
+    #     add_participants()
     elif selection == 8:
         clear_calendar()
-    elif selection == 84:
-        build_event_id_dictionary()
-    elif selection == 85:
-        get_time_from_user("start")
-    elif selection == 86:
-        pass
+    # elif selection == 84:
+    #     build_event_id_dictionary()
+    # elif selection == 85:
+    #     get_time_from_user("start")
+    # elif selection == 86:
+    #     pass
     else:
         pass
 
@@ -134,14 +132,13 @@ def print_event_details(type, index, id):
               f"from {event_start_str} to {event_end_str}")
 
 
-def display_calendar(dictionary):
+def display_calendar():
     """
     List upcoming events in the calendar
     Display message if calendar is empty
     Past events will not be shown
     """
-    event_id_dictionary = dictionary
-    number_of_events = len(event_id_dictionary)
+    number_of_events = len(event_id_dict)
 
     # Taylors message according to number of events in the calendar
     if number_of_events == 0:
@@ -153,14 +150,14 @@ def display_calendar(dictionary):
             print(f"There are {number_of_events} events in your calendar\n\n")
 
         for idx, event in enumerate(CALENDAR, start=1):
-            print_event_details("full_detail", idx, event_id_dictionary[idx])
+            print_event_details("full_detail", idx, event_id_dict[idx])
 
             # Requires user input after two events are displayed to
             # show additional events, unless last event is being shown
             if idx % 2 == 0 and idx != number_of_events:
                 input("Press any key to show additional events")
 
-    input("Press any key to go back to the main menu")
+    input("Press any key to go back to the main menu/n")
 
 
 def get_date_from_user(start_or_end):
@@ -213,6 +210,8 @@ def get_time_from_user(start_or_end):
             chosen_time = datetime.time(time_list[0], time_list[1])
         except ValueError:
             print("Please enter a valid time in the HH:MM format")
+        except IndexError:
+            print("Please enter a valid time in the HH:MM format")
         else:
             is_valid_time = True
 
@@ -237,6 +236,8 @@ def add_new_event():
         if event_start_datetime <= datetime.datetime.now():
             print("\nEvent must start after "
                   f"{datetime.datetime.now()}")
+        # elif is_conflict("start", event_start_datetime):
+        #     continue
         else:
             break
 
@@ -259,6 +260,25 @@ def add_new_event():
           "go back to the main menu\n")
     event_id_dict = build_event_id_dictionary()
 
+
+# def is_conflict(start_or_end, date):
+#     potential_date = date
+
+#     if len(event_id_dict) == 0:
+#         return False
+#     else:
+#         if start_or_end == "start":
+#             for event in CALENDAR:
+#                 if (potential_date >= event.start and potential_date <= event.end):
+#                     print(f"Event conflicts with {event.summary}, which runs from {event.start} to {event.end}")
+#                     return True
+#         elif start_or_end == "end":
+#             for event in CALENDAR:
+#                 if potential_date >= event.start:
+#                     print(f"Event conflicts with {event.summary}, which runs from {event.start} to {event.end}")
+#                     return True
+#         else:
+#             return False
 
 def remove_event():
     global event_id_dict
@@ -328,10 +348,10 @@ def clear_calendar():
                 else:
                     continue
 
-def add_participants():
-    event = CALENDAR.get_event(event_id_dict[1])
-    print(event)
-    event.location = "massachubatts"
+# def add_participants():
+#     event = CALENDAR.get_event(event_id_dict[1])
+#     print(event)
+#     event.location = "massachubatts"
     #atd = Attendee("joe@email.com")
     #print(atd)
     #input("PK")
