@@ -1,7 +1,7 @@
 import gcsa
 import datetime
 #from datetime import datetime
-from gcsa.event import Event
+from gcsa.event import Event, Attendee
 from gcsa.google_calendar import GoogleCalendar
 from gcsa.recurrence import Recurrence, DAILY, SU, SA
 from google.oauth2.service_account import Credentials
@@ -90,6 +90,10 @@ def activate_menu_option(selection):
         add_new_event()
     elif selection == 3:
         remove_event()
+    elif selection == 6:
+        add_participants()
+    elif selection == 8:
+        clear_calendar()
     elif selection == 84:
         build_event_id_dictionary()
     elif selection == 85:
@@ -140,7 +144,7 @@ def display_calendar(dictionary):
 
     # Taylors message according to number of events in the calendar
     if number_of_events == 0:
-        print("There are no upcoming events in the dictionary")
+        print("There are no upcoming events in the calendar\n")
     else:
         if number_of_events == 1:
             print("There is 1 upcoming event in your calendar: \n\n")
@@ -221,7 +225,7 @@ def add_new_event():
     generates a new event id dictionary including the new event
     """
     global event_id_dict
-    event_name = input("Please eneter the name of the event: \n")
+    event_name = input("Please enter the name of the event: \n")
     event_start_date = get_date_from_user("start")
     event_end_date = get_date_from_user("end")
     event_start_time = get_time_from_user("start")
@@ -276,6 +280,49 @@ def remove_event():
                 break
 
 
+def clear_calendar():
+    global event_id_dict
+    response = ""
+    valid_responses = ["Y", "N"]
+
+    if len(event_id_dict) == 0:
+        print("\nThere are no events in the calendar")
+        input("Press any key to return to the main menu\n")
+    else:
+        while True:
+            try:
+                print("\nAll upcoming events in the calendar will be deleted")
+                response = input("Would you like to proceed? (Y/N)").upper()
+                if response not in valid_responses:
+                    print("Please type Y or N")
+            except ValueError:
+                print("\nPlease type Y or N")
+            else:
+                if response == "N":
+                    input("\nPress any key to return to the main menu")
+                    break
+                elif response == "Y":
+                    print("\nClearing calendar")
+
+                    for event in CALENDAR:
+                        CALENDAR.delete_event(event)
+
+                    event_id_dict = build_event_id_dictionary()
+                    input("\nDone. Press any key to go back "
+                          "to the main menu\n")
+                    break
+                else:
+                    continue
+
+def add_participants():
+    event = CALENDAR.get_event(event_id_dict[1])
+    print(event)
+    event.location = "massachubatts"
+    #atd = Attendee("joe@email.com")
+    #print(atd)
+    #input("PK")
+    #event.attendees = atd
+    #CALENDAR.update_event(event)
 
 
 
