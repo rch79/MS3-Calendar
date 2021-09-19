@@ -1,8 +1,6 @@
-import gcsa
 import datetime
-from gcsa.event import Event  # , Attendee
+from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
-# from gcsa.recurrence import Recurrence, DAILY, SU, SA
 from google.oauth2.service_account import Credentials
 
 
@@ -46,15 +44,8 @@ def display_main_menu():
     print("* 1. Show events in calendar       *")
     print("* 2. Add a new event               *")
     print("* 3. Remove an event               *")
-    # print("* 4. Add a recurring event         *")
-    # print("* 5. Remove a recurring event      *")
-    # print("* 6. Add event participants        *")
-    # print("* 7. Remove event participants     *")
-    print("* 8. Clear calendar                *")
-    # print("* 84. Test get event dictionary fc *")
-    # print("* 85. Test get_time function       *")
-    # print("* 86. Add test event               *")
-    print("* 9. Quit                          *")
+    print("* 4. Clear calendar                *")
+    print("* 5. Quit                          *")
     print("************************************\n")
 
 
@@ -63,7 +54,7 @@ def get_user_menu_option():
     Get user selection of one of the main menu options
     Returns an error message if user makes an invalid selection
     """
-    menu_options = [1, 2, 3, 8, 9]
+    menu_options = [1, 2, 3, 4, 5]
     user_selection = ""
 
     while user_selection not in menu_options:
@@ -89,16 +80,8 @@ def activate_menu_option(selection):
         add_new_event()
     elif selection == 3:
         remove_event()
-    # elif selection == 6:
-    #     add_participants()
-    elif selection == 8:
+    elif selection == 4:
         clear_calendar()
-    # elif selection == 84:
-    #     build_event_id_dictionary()
-    # elif selection == 85:
-    #     get_time_from_user("start")
-    # elif selection == 86:
-    #     pass
     else:
         pass
 
@@ -157,7 +140,7 @@ def display_calendar():
             if idx % 2 == 0 and idx != number_of_events:
                 input("Press any key to show additional events")
 
-    input("Press any key to go back to the main menu/n")
+    input("Press any key to go back to the main menu\n")
 
 
 def get_date_from_user(start_or_end):
@@ -261,25 +244,6 @@ def add_new_event():
     event_id_dict = build_event_id_dictionary()
 
 
-# def is_conflict(start_or_end, date):
-#     potential_date = date
-
-#     if len(event_id_dict) == 0:
-#         return False
-#     else:
-#         if start_or_end == "start":
-#             for event in CALENDAR:
-#                 if (potential_date >= event.start and potential_date <= event.end):
-#                     print(f"Event conflicts with {event.summary}, which runs from {event.start} to {event.end}")
-#                     return True
-#         elif start_or_end == "end":
-#             for event in CALENDAR:
-#                 if potential_date >= event.start:
-#                     print(f"Event conflicts with {event.summary}, which runs from {event.start} to {event.end}")
-#                     return True
-#         else:
-#             return False
-
 def remove_event():
     global event_id_dict
     number_of_events = len(event_id_dict)
@@ -292,7 +256,9 @@ def remove_event():
             print_event_details("low_detail", idx, event_id_dict[idx])
 
         try:
-            user_input = int(input(f"Please select the event to be deleted (1-{number_of_events}))"))
+            user_input = int(
+                input("Please select the event to "
+                      f"be deleted (1-{number_of_events}))"))
             if user_input not in range(1, number_of_events + 1):
                 print("Invalid selection!")
         except ValueError:
@@ -300,7 +266,8 @@ def remove_event():
         else:
             while yes_or_no not in ["Y", "y", "N", "n"]:
                 print("\nThe following event will be deleted: ")
-                print_event_details("full_detail", user_input, event_id_dict[user_input])
+                print_event_details(
+                    "full_detail", user_input, event_id_dict[user_input])
                 yes_or_no = input("\nPlease confirm your selection (Y/N)")
 
             if yes_or_no in ["Y", "y"]:
@@ -308,7 +275,7 @@ def remove_event():
                 event = CALENDAR.get_event(event_id_dict[user_input])
                 CALENDAR.delete_event(event)
                 event_id_dict = build_event_id_dictionary()
-                print("Event successfully deleted")
+                print("Event successfully deleted\n")
                 break
             else:
                 break
@@ -348,17 +315,6 @@ def clear_calendar():
                 else:
                     continue
 
-# def add_participants():
-#     event = CALENDAR.get_event(event_id_dict[1])
-#     print(event)
-#     event.location = "massachubatts"
-    #atd = Attendee("joe@email.com")
-    #print(atd)
-    #input("PK")
-    #event.attendees = atd
-    #CALENDAR.update_event(event)
-
-
 
 event_id_dict = build_event_id_dictionary()
 
@@ -370,26 +326,13 @@ def main():
     while True:
         display_main_menu()
         menu_option = get_user_menu_option()
-        if menu_option == 9:
-            print("\nThank you for using Kalendar.")
+        if menu_option == 5:
+            print("\nThank you for using Calendar.")
             break
         else:
             activate_menu_option(menu_option)
 
 
-print("Welcome to Kalendar")
+print("Welcome to Calendar")
 print("A Python-based Google Calendar Interface\n")
 main()
-
-""" print("start print")
-for events in CALENDAR:
-    print(events)
-print("end print") """
-""" event = Event(
-    'Breakfast',
-    start=(18/Sept/2021)[9:00],
-    end=(18/Sept/2021)[9:45],
-    event_id="12345"
-    )
-
-CALENDAR.add_event(event) """
