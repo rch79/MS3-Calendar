@@ -41,6 +41,7 @@ def display_main_menu():
     """
     Display main menu on the screen
     """
+    print("Calendar URL: https://bit.ly/392Xz9R\n")
     print("************MAIN MENU***************")
     print("* Please make your selection below *")
     print("************************************")
@@ -358,7 +359,6 @@ def main():
 
 print("Welcome to Kalendar")
 print("A Python-based Google Calendar Interface\n")
-print("Calendar URL: https://bit.ly/392Xz9R\n")
 main()
 
 """ print("start print")
