@@ -225,24 +225,37 @@ def add_new_event():
     generates a new event id dictionary including the new event
     """
     global event_id_dict
-    event_name = input("Please enter the name of the event: \n")
-    event_start_date = get_date_from_user("start")
-    event_end_date = get_date_from_user("end")
-    event_start_time = get_time_from_user("start")
-    event_end_time = get_time_from_user("end")
 
-    event_start_datetime = datetime.datetime.combine(
-        event_start_date, event_start_time)
-    event_end_datetime = datetime.datetime.combine(
-        event_end_date, event_end_time)
+    event_name = input("Please enter the name of the event: \n")
+
+    while True:
+        event_start_date = get_date_from_user("start")
+        event_start_time = get_time_from_user("start")
+        event_start_datetime = datetime.datetime.combine(
+            event_start_date, event_start_time)
+        if event_start_datetime <= datetime.datetime.now():
+            print("\nEvent must start after "
+                  f"{datetime.datetime.now()}")
+        else:
+            break
+
+    while True:
+        event_end_date = get_date_from_user("end")
+        event_end_time = get_time_from_user("end")
+        event_end_datetime = datetime.datetime.combine(
+            event_end_date, event_end_time)
+        if event_end_datetime <= event_start_datetime:
+            print(f"\nEvent must end after {event_start_datetime}\n")
+        else:
+            break
 
     new_event = Event(
         event_name, start=event_start_datetime, end=event_end_datetime)
 
     print("\nAdding event")
     CALENDAR.add_event(new_event)
-    input("\nEvent added succesfully. Press any key to continue")
-
+    input("\nEvent added succesfully. Press any key to "
+          "go back to the main menu\n")
     event_id_dict = build_event_id_dictionary()
 
 
