@@ -60,6 +60,7 @@ Since the dictionary is accessed and modified by more than one menu option, I de
    - SublimeREPL - For interpreting Python code within an editor tab
  - GitHub for Windows - For uploading code changes to the project GitHub repository when coding was done on Sublime text
  - Heroku - Used for deployment of the program
+ - Readme.So - A web-based editor for easy README file creation
 
  ### Python Libraries:
  - datetime - For manipulation of date and time objects
