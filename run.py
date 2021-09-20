@@ -1,4 +1,5 @@
 import datetime
+import gcsa
 from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
 from google.oauth2.service_account import Credentials
@@ -59,8 +60,8 @@ def get_user_menu_option():
 
     while user_selection not in menu_options:
         try:
-            user_selection = int(input("Please type your "
-                                       "selection (1 - 9): \n"))
+            user_selection = int(input("Please type your selection "
+                                       f"(1 - {len(menu_options)}): \n"))
             if user_selection not in menu_options:
                 print("Please select a valid menu option")
         except ValueError:
