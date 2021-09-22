@@ -19,13 +19,14 @@ FUTURE = TODAY + relativedelta(years=+10)
 
 def build_event_id_dictionary():
     """
-    Retrieves unique event ids and event start dates from Google
-    calendar, sorts list in cronological order, and add unique event
-    ids to a dictionary
+    Build a dictionary of unique event ids used to manipulate
+    the calendar. 
     """
     event_id_dictionary = {}
     idx = 1
 
+    #Adds events to dictionary in chronological order
+    #using the option startTime
     for event in CALENDAR[TODAY:FUTURE:'startTime']:
         event_id_dictionary[idx] = event.id
         idx += 1
