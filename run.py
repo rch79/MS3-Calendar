@@ -186,9 +186,8 @@ def get_time_from_user(start_or_end):
     """
     Get time from user in HH:MM 24h format
     """
-    is_valid_time = False
 
-    while not is_valid_time:
+    while True
         try:
             time_str = input(f"Please enter the event {start_or_end} "
                              "time in HH:MM 24h format:\n")
@@ -200,7 +199,7 @@ def get_time_from_user(start_or_end):
         except IndexError:
             print("Please enter a valid time in the HH:MM format")
         else:
-            is_valid_time = True
+            break
 
     return chosen_time
 
