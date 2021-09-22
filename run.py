@@ -26,7 +26,7 @@ def build_event_id_dictionary():
     idx = 1
 
     #Adds events to dictionary in chronological order
-    #using the option startTime
+    #from range TODAY to FUTURE, using the option startTime
     for event in CALENDAR[TODAY:FUTURE:'startTime']:
         event_id_dictionary[idx] = event.id
         idx += 1
@@ -118,8 +118,8 @@ def print_event_details(type, index, id):
 
 def display_calendar():
     """
-    List upcoming events in the calendar
-    Display message if calendar is empty
+    List events in the calendar from start of
+    current day to 10 years from current date
     Past events will not be shown
     """
     number_of_events = len(event_id_dict)
@@ -141,7 +141,7 @@ def display_calendar():
             if idx % 2 == 0 and idx != number_of_events:
                 input("Press any key to show additional events")
 
-    input("Press any key to go back to the main menu\n")
+    input("\nPress any key to go back to the main menu\n")
 
 
 def get_date_from_user(start_or_end):
