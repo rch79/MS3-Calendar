@@ -20,7 +20,6 @@ TODAY = datetime.datetime.combine(NOW, datetime.time.min)
 FUTURE = TODAY + relativedelta(years=+10)
 
 
-
 def build_event_id_dictionary():
     """
     Build a dictionary of unique event ids used to manipulate
@@ -128,12 +127,12 @@ def display_calendar():
     """
     number_of_events = len(event_id_dict)
 
-    # Taylors message according to number of events in the calendar
+    # Customizes message according to number of events in the calendar
     if number_of_events == 0:
-        print("There are no upcoming events in the calendar\n")
+        print("\nThere are no upcoming events in the calendar\n")
     else:
         if number_of_events == 1:
-            print("There is 1 upcoming event in your calendar: \n\n")
+            print("\nThere is 1 upcoming event in your calendar: \n\n")
         else:
             print(f"There are {number_of_events} events in your calendar\n\n")
 
@@ -299,15 +298,16 @@ def clear_calendar():
     valid_responses = ["Y", "N"]
 
     if len(event_id_dict) == 0:
-        print("\nThere are no events in the calendar")
+        print("\nThere are no events in the calendar\n")
         input("Press any key to return to the main menu\n")
     else:
         while True:
             try:
-                print("\nAll upcoming events in the calendar will be deleted")
-                response = input("Would you like to proceed? (Y/N)").upper()
-                if response not in valid_responses:
-                    print("Please type Y or N")
+                while response not in valid_responses:
+                    print("\nAll upcoming events in the calendar will be deleted")
+                    response = input("Would you like to proceed? (Y/N)").upper()
+                    if response not in valid_responses:
+                        print("Please type Y or N")
             except ValueError:
                 print("\nPlease type Y or N")
             else:
@@ -317,7 +317,8 @@ def clear_calendar():
                 elif response == "Y":
                     print("\nClearing calendar")
 
-                    for event in CALENDAR:
+                    for idx, event in enumerate(event_id_dict, start=1):
+                        event = CALENDAR.get_event(event_id_dict[idx])
                         CALENDAR.delete_event(event)
 
                     event_id_dict = build_event_id_dictionary()
