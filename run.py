@@ -351,13 +351,13 @@ def main():
         display_main_menu()
         menu_option = get_user_menu_option()
         if menu_option == 5:
-            print("\nThank you for using Calendar.")
+            print("\nThank you for using GCalendar-CI.")
             break
         else:
             activate_menu_option(menu_option)
 
 
-print("Welcome to Calendar")
+print("Welcome to GCalendar-CI")
 print("A Python-based Google Calendar Interface\n")
 event_id_dict = build_event_id_dictionary()
 main()
