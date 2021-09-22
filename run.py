@@ -1,7 +1,6 @@
 import datetime  # for manipulating date and time objects
 import pytz  # for adding timezone data to datetime objects
-from dateutil.relativedelta import relativedelta  # for performing operations with datetime objects
-import gcsa  # for interacting with Google Calendar
+from dateutil.relativedelta import relativedelta  # datetime extension
 from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
 from google.oauth2.service_account import Credentials
@@ -16,20 +15,20 @@ CALENDAR = GoogleCalendar(
 
 TIMEZONE = pytz.timezone("Europe/Dublin")
 NOW = datetime.datetime.now(TIMEZONE)  # current time
-TODAY = datetime.datetime.combine(NOW, datetime.time.min)  # today's data starting at 00:00
+TODAY = datetime.datetime.combine(NOW, datetime.time.min)
 FUTURE = TODAY + relativedelta(years=+10)  # equals today's date plus 10 years
 
 
 def build_event_id_dictionary():
     """
     Build a dictionary of unique event ids used to manipulate
-    the calendar. 
+    the calendar
     """
     event_id_dictionary = {}
     idx = 1
 
-    #Adds events to dictionary in chronological order
-    #from range TODAY to FUTURE, using the option startTime
+    # Adds events to dictionary in chronological order
+    # from range TODAY to FUTURE, using the option startTime
     for event in CALENDAR[NOW:FUTURE:'startTime']:
         event_id_dictionary[idx] = event.id
         idx += 1
@@ -136,7 +135,7 @@ def display_calendar():
         else:
             print(f"There are {number_of_events} events in your calendar\n\n")
 
-        print("Showing events for up to 10 years from current date\n")
+        print("Showing events for up to 10 years from the current date\n")
         print("Past events will not be shown\n")
 
         for idx, event in enumerate(event_id_dict, start=1):
@@ -228,8 +227,8 @@ def add_new_event():
 
         # check if event is starting now or in the future
         if event_start_datetime <= NOW:
-             print("\nEvent must start after "
-                   f"{NOW.strftime(date_str_format)}\n")
+            print("\nEvent must start after "
+                  f"{NOW.strftime(date_str_format)}\n")
         else:
             break
 
@@ -243,19 +242,21 @@ def add_new_event():
 
         # Check if event ends after event start
         if event_end_datetime <= event_start_datetime:
-            print(f"\nEvent must end after {event_start_datetime.strftime(date_str_format)}\n")
+            print("\nEvent must end after "
+                  f"{event_start_datetime.strftime(date_str_format)}\n")
         else:
             break
 
     # add new event to the calendar
     new_event = Event(
-        event_name, start=event_start_datetime, end=event_end_datetime, timezone="Europe/Dublin")
+        event_name, start=event_start_datetime,
+        end=event_end_datetime, timezone="Europe/Dublin")
 
     print("\nAdding event")
     CALENDAR.add_event(new_event)
     input("\nEvent added succesfully. Press any key to "
           "go back to the main menu\n")
-    event_id_dict = build_event_id_dictionary() # refresh event id dictionary to include new event
+    event_id_dict = build_event_id_dictionary()
 
 
 def remove_event():
@@ -275,9 +276,10 @@ def remove_event():
             while user_input not in range(0, number_of_events + 1):
                 user_input = int(
                     input("\nPlease select the event to "
-                        f"be deleted (1 - {number_of_events}) or press 0 to go back to the main menu\n"))
+                          f"be deleted (1 - {number_of_events}) "
+                          "or press 0 to go back to the main menu\n"))
                 if user_input not in range(0, number_of_events + 1):
-                    print("\nInvalid selection\n")           
+                    print("\nInvalid selection\n")
         except ValueError:
             print("Invalid selection!")
         else:
@@ -288,7 +290,8 @@ def remove_event():
                     print("\nThe following event will be deleted: ")
                     print_event_details(
                         "full_detail", user_input, event_id_dict[user_input])
-                    yes_or_no = input("\nPlease confirm your selection (Y/N)\n")
+                    yes_or_no = input("\nPlease confirm your "
+                                      "selection (Y/N)\n")
 
                 if yes_or_no in ["Y", "y"]:
                     print("Deleting event")
@@ -318,8 +321,10 @@ def clear_calendar():
         while True:
             try:
                 while response not in valid_responses:
-                    print("\nAll upcoming events in the next 10 years will be deleted")
-                    response = input("Would you like to proceed? (Y/N)").upper()
+                    print("\nAll upcoming events in the next 10 "
+                          "years will be deleted")
+                    response = input("Would you like "
+                                     "to proceed? (Y/N)").upper()
                     if response not in valid_responses:
                         print("Please type Y or N")
             except ValueError:
