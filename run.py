@@ -14,7 +14,7 @@ CREDS = Credentials.from_service_account_file(
 CALENDAR = GoogleCalendar(
     "13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
 
-timezone = pytz.timezone("Europe/Dublin")
+TIMEZONE = pytz.timezone("Europe/Dublin")
 NOW = datetime.datetime.now(timezone)
 TODAY = datetime.datetime.combine(NOW, datetime.time.min)
 FUTURE = TODAY + relativedelta(years=+10)
@@ -265,7 +265,7 @@ def remove_event():
     while True:
         print(f"There are {number_of_events} events in the calendar: \n")
 
-        #Lists events in low detail
+        # Lists events in low detail
         for idx, event in enumerate(event_id_dict, start=1):
             print_event_details("low_detail", idx, event_id_dict[idx])
 
@@ -301,6 +301,10 @@ def remove_event():
 
 
 def clear_calendar():
+    '''
+    Clear all events in the calendar from current date through
+    10 years from current date
+    '''
     global event_id_dict
     response = ""
     valid_responses = ["Y", "N"]
