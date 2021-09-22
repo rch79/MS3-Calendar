@@ -257,33 +257,40 @@ def remove_event():
 
     while True:
         print(f"There are {number_of_events} events in the calendar: \n")
-        for idx, event in enumerate(CALENDAR, start=1):
+
+        #Lists events in low detail
+        for idx, event in enumerate(event_id_dict, start=1):
             print_event_details("low_detail", idx, event_id_dict[idx])
 
         try:
-            user_input = int(
-                input("Please select the event to "
-                      f"be deleted (1-{number_of_events}))"))
-            if user_input not in range(1, number_of_events + 1):
-                print("Invalid selection!")
+            while user_input not in range(0, number_of_events + 1):
+                user_input = int(
+                    input("\nPlease select the event to "
+                        f"be deleted (1 - {number_of_events}) or press 0 to go back to the main menu\n"))
+                if user_input not in range(0, number_of_events + 1):
+                    print("\nInvalid selection\n")           
         except ValueError:
             print("Invalid selection!")
         else:
-            while yes_or_no not in ["Y", "y", "N", "n"]:
-                print("\nThe following event will be deleted: ")
-                print_event_details(
-                    "full_detail", user_input, event_id_dict[user_input])
-                yes_or_no = input("\nPlease confirm your selection (Y/N)")
-
-            if yes_or_no in ["Y", "y"]:
-                print("Deleting event")
-                event = CALENDAR.get_event(event_id_dict[user_input])
-                CALENDAR.delete_event(event)
-                event_id_dict = build_event_id_dictionary()
-                print("Event successfully deleted\n")
+            if user_input == 0:
                 break
             else:
-                break
+                while yes_or_no not in ["Y", "y", "N", "n"]:
+                    print("\nThe following event will be deleted: ")
+                    print_event_details(
+                        "full_detail", user_input, event_id_dict[user_input])
+                    yes_or_no = input("\nPlease confirm your selection (Y/N)\n")
+
+                if yes_or_no in ["Y", "y"]:
+                    print("Deleting event")
+                    event = CALENDAR.get_event(event_id_dict[user_input])
+                    CALENDAR.delete_event(event)
+                    event_id_dict = build_event_id_dictionary()
+                    print("Event successfully deleted\n")
+                    input("Press any key to go back to the main menu")
+                    break
+                else:
+                    break
 
 
 def clear_calendar():
