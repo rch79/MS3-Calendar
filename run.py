@@ -1,7 +1,7 @@
-import datetime
-import pytz
-from dateutil.relativedelta import relativedelta
-import gcsa
+import datetime  # for manipulating date and time objects
+import pytz  # for adding timezone data to datetime objects
+from dateutil.relativedelta import relativedelta  # for performing operations with datetime objects
+import gcsa  # for interacting with Google Calendar
 from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
 from google.oauth2.service_account import Credentials
@@ -15,9 +15,9 @@ CALENDAR = GoogleCalendar(
     "13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
 
 TIMEZONE = pytz.timezone("Europe/Dublin")
-NOW = datetime.datetime.now(timezone)
-TODAY = datetime.datetime.combine(NOW, datetime.time.min)
-FUTURE = TODAY + relativedelta(years=+10)
+NOW = datetime.datetime.now(timezone)  # current time
+TODAY = datetime.datetime.combine(NOW, datetime.time.min)  # today's data starting at 00:00
+FUTURE = TODAY + relativedelta(years=+10)  # equals today's date plus 10 years
 
 
 def build_event_id_dictionary():
