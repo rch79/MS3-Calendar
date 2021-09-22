@@ -132,7 +132,7 @@ def display_calendar():
         else:
             print(f"There are {number_of_events} events in your calendar\n\n")
 
-        for idx, event in enumerate(CALENDAR, start=1):
+        for idx, event in enumerate(event_id_dict, start=1):
             print_event_details("full_detail", idx, event_id_dict[idx])
 
             # Requires user input after two events are displayed to
