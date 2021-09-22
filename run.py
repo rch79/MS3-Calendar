@@ -1,4 +1,5 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 import gcsa
 from gcsa.event import Event
 from gcsa.google_calendar import GoogleCalendar
@@ -12,6 +13,9 @@ CREDS = Credentials.from_service_account_file(
 CALENDAR = GoogleCalendar(
     "13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
 
+NOW = datetime.datetime.now()
+TODAY = datetime.datetime.combine(NOW, datetime.time.min)
+FUTURE = TODAY + relativedelta(years=+10)
 
 def build_event_id_dictionary():
     """
@@ -20,16 +24,11 @@ def build_event_id_dictionary():
     ids to a dictionary
     """
     event_id_dictionary = {}
-    event_id_list = []
+    idx = 1
 
-    for event in CALENDAR:
-        event_id_list.append((event.start, event.id))
-
-    event_id_list.sort()  # sort event list in cronological order
-
-    # key values will be assigned in chronological order
-    for idx, event in enumerate(event_id_list):
-        event_id_dictionary[idx + 1] = event_id_list[idx][1]
+    for event in CALENDAR[TODAY:FUTURE:'startTime']:
+        event_id_dictionary[idx] = event.id
+        idx += 1
 
     return event_id_dictionary
 
@@ -217,14 +216,14 @@ def add_new_event():
         event_start_time = get_time_from_user("start")
         event_start_datetime = datetime.datetime.combine(
             event_start_date, event_start_time)
-        if event_start_datetime <= datetime.datetime.now():
-            print("\nEvent must start after "
-                  f"{datetime.datetime.now()}")
+        # if event_start_datetime <= datetime.datetime.now():
+        #     print("\nEvent must start after "
+        #           f"{datetime.datetime.now()}")
         # elif is_conflict("start", event_start_datetime):
         #     continue
-        else:
-            break
-
+        # else:
+        #     break
+        break
     while True:
         event_end_date = get_date_from_user("end")
         event_end_time = get_time_from_user("end")
@@ -317,8 +316,36 @@ def clear_calendar():
                     continue
 
 
-event_id_dict = build_event_id_dictionary()
+# event_id_dict = build_event_id_dictionary()
 
+# def test_list():
+#     data_hoje = datetime.datetime.now()
+#     data_futuro = datetime.datetime(2028,12,12)
+#     print(data_hoje)
+#     print(data_futuro)
+#     test_var = CALENDAR[data_hoje:data_futuro]
+#     test_get_events = CALENDAR.get_events(data_hoje, data_futuro, order_by='startTime')
+#     #print(test_var)
+#     print(test_get_events)
+#     for event in CALENDAR[data_hoje:data_futuro:'startTime']:
+#         print(event)
+#         print(event.id)
+#         print(event.start)
+#         print("\n\n")
+
+# def new_dictionary():
+#     NOW = datetime.datetime.today()
+#     today = datetime.datetime.combine(NOW, datetime.time.min)
+#     data_futuro = today + relativedelta(years=10)
+#     print(data_futuro)
+#     print(today)
+#     index = 1
+#     dicio = {}
+#     for event in CALENDAR[today:data_futuro:'startTime']:
+#         print(event)
+#         dicio[index] = event.id
+#         index += 1
+#     print(dicio)
 
 def main():
     """
@@ -336,4 +363,7 @@ def main():
 
 print("Welcome to Calendar")
 print("A Python-based Google Calendar Interface\n")
+event_id_dict = build_event_id_dictionary()
 main()
+#test_list()
+#new_dictionary()
