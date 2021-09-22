@@ -55,24 +55,28 @@ The interface was designed to be straightforwad and self-explanatory. It consist
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
-|Add a new event|Select option "2" on the main menu|Navigate to the Add New Event menu. User will be able to add the event start and end date and time, and the event will be uploaded to the Google Calendar|Works as expected|
+| Add a new event| Select option "2" on the main menu| Navigate to the Add New Event menu. User will be able to add the event start and end date and time, and the event will be uploaded to the Google Calendar|Works as expected |
 
 3. I would like to remove an event from the calendar
+
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 |Remove an event from the calendar|Select option "3" on the main menu|A list of events in the calendar will be displayed. User will type the number corresponding to the event to be deleted. The program will ask the user to confirm the selection. Event will be deleted and removed from the Google Calendar |Works as expected|
 
 4. I would like to clear all the events from the calendar
+
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 |Clear all upcoming events from the calendar|Select option "4" on the main menu|All events ranging from current date through the following 10 years will be deleted|Works as expected|
 
 5. I would like to see the calendar on the Web
+
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 |See the calendar on the Web|Navigate to the [hyperlink shown at the top of the main menu on a web browser](https://bit.ly/392Xz9R)|Works as expected|
 
 6. I would like to quit the program
+
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 |Quit the program|Press "5" on the main menu|Program will shut down|Works as expected|
