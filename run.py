@@ -15,7 +15,7 @@ CALENDAR = GoogleCalendar(
     "13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
 
 TIMEZONE = pytz.timezone("Europe/Dublin")
-NOW = datetime.datetime.now(timezone)  # current time
+NOW = datetime.datetime.now(TIMEZONE)  # current time
 TODAY = datetime.datetime.combine(NOW, datetime.time.min)  # today's data starting at 00:00
 FUTURE = TODAY + relativedelta(years=+10)  # equals today's date plus 10 years
 
@@ -136,6 +136,9 @@ def display_calendar():
         else:
             print(f"There are {number_of_events} events in your calendar\n\n")
 
+        print("Showing events for up to 10 years from current date\n")
+        print("Past events will not be shown\n")
+
         for idx, event in enumerate(event_id_dict, start=1):
             print_event_details("full_detail", idx, event_id_dict[idx])
 
@@ -187,7 +190,7 @@ def get_time_from_user(start_or_end):
     Get time from user in HH:MM 24h format
     """
 
-    while True
+    while True:
         try:
             time_str = input(f"Please enter the event {start_or_end} "
                              "time in HH:MM 24h format:\n")
@@ -221,7 +224,7 @@ def add_new_event():
         event_start_time = get_time_from_user("start")
         event_start_datetime = datetime.datetime.combine(
             event_start_date, event_start_time)
-        event_start_datetime = timezone.localize(event_start_datetime)
+        event_start_datetime = TIMEZONE.localize(event_start_datetime)
 
         # check if event is starting now or in the future
         if event_start_datetime <= NOW:
@@ -236,7 +239,7 @@ def add_new_event():
         event_end_time = get_time_from_user("end")
         event_end_datetime = datetime.datetime.combine(
             event_end_date, event_end_time)
-        event_end_datetime = timezone.localize(event_end_datetime)
+        event_end_datetime = TIMEZONE.localize(event_end_datetime)
 
         # Check if event ends after event start
         if event_end_datetime <= event_start_datetime:
@@ -315,7 +318,7 @@ def clear_calendar():
         while True:
             try:
                 while response not in valid_responses:
-                    print("\nAll upcoming events in the calendar will be deleted")
+                    print("\nAll upcoming events in the next 10 years will be deleted")
                     response = input("Would you like to proceed? (Y/N)").upper()
                     if response not in valid_responses:
                         print("Please type Y or N")
@@ -356,6 +359,5 @@ def main():
 
 print("Welcome to Calendar")
 print("A Python-based Google Calendar Interface\n")
-print(NOW)
 event_id_dict = build_event_id_dictionary()
 main()
