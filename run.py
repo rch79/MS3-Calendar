@@ -1,4 +1,5 @@
 import datetime
+import pytz
 from dateutil.relativedelta import relativedelta
 import gcsa
 from gcsa.event import Event
@@ -13,9 +14,12 @@ CREDS = Credentials.from_service_account_file(
 CALENDAR = GoogleCalendar(
     "13mu09pc1s201mq40c0e51uics@group.calendar.google.com", credentials=CREDS)
 
-NOW = datetime.datetime.now()
+timezone = pytz.timezone("Europe/Dublin")
+NOW = datetime.datetime.now(timezone)
 TODAY = datetime.datetime.combine(NOW, datetime.time.min)
 FUTURE = TODAY + relativedelta(years=+10)
+
+
 
 def build_event_id_dictionary():
     """
@@ -27,7 +31,7 @@ def build_event_id_dictionary():
 
     #Adds events to dictionary in chronological order
     #from range TODAY to FUTURE, using the option startTime
-    for event in CALENDAR[TODAY:FUTURE:'startTime']:
+    for event in CALENDAR[NOW:FUTURE:'startTime']:
         event_id_dictionary[idx] = event.id
         idx += 1
 
@@ -236,7 +240,7 @@ def add_new_event():
             break
 
     new_event = Event(
-        event_name, start=event_start_datetime, end=event_end_datetime)
+        event_name, start=event_start_datetime, end=event_end_datetime, timezone="Europe/Dublin")
 
     print("\nAdding event")
     CALENDAR.add_event(new_event)
@@ -368,3 +372,6 @@ event_id_dict = build_event_id_dictionary()
 main()
 #test_list()
 #new_dictionary()
+# print(NOW)
+# horain = datetime.time(23,0)
+# datain = datetime.date(2022, 11, 10)
