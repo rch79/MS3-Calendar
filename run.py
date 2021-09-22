@@ -209,35 +209,43 @@ def add_new_event():
     """
     Create a new event based on start and end date and time
     provided by user and add it to the Google calendar, and
-    generates a new event id dictionary including the new event
+    updates the event id dictionary to include the new event
     """
     global event_id_dict
+    date_str_format = "%a, %b %d %Y at %H:%M"
 
     event_name = input("Please enter the name of the event: \n")
 
+    # get event start date and time from user
     while True:
         event_start_date = get_date_from_user("start")
         event_start_time = get_time_from_user("start")
         event_start_datetime = datetime.datetime.combine(
             event_start_date, event_start_time)
-        # if event_start_datetime <= datetime.datetime.now():
-        #     print("\nEvent must start after "
-        #           f"{datetime.datetime.now()}")
-        # elif is_conflict("start", event_start_datetime):
-        #     continue
-        # else:
-        #     break
-        break
+        event_start_datetime = timezone.localize(event_start_datetime)
+
+        # check if event is starting now or in the future
+        if event_start_datetime <= NOW:
+             print("\nEvent must start after "
+                   f"{NOW.strftime(date_str_format)}\n")
+        else:
+            break
+
+    # get event end date and time from user
     while True:
         event_end_date = get_date_from_user("end")
         event_end_time = get_time_from_user("end")
         event_end_datetime = datetime.datetime.combine(
             event_end_date, event_end_time)
+        event_end_datetime = timezone.localize(event_end_datetime)
+
+        # Check if event ends after event start
         if event_end_datetime <= event_start_datetime:
-            print(f"\nEvent must end after {event_start_datetime}\n")
+            print(f"\nEvent must end after {event_start_datetime.strftime(date_str_format)}\n")
         else:
             break
 
+    # add new event to the calendar
     new_event = Event(
         event_name, start=event_start_datetime, end=event_end_datetime, timezone="Europe/Dublin")
 
@@ -245,7 +253,7 @@ def add_new_event():
     CALENDAR.add_event(new_event)
     input("\nEvent added succesfully. Press any key to "
           "go back to the main menu\n")
-    event_id_dict = build_event_id_dictionary()
+    event_id_dict = build_event_id_dictionary() # refresh event id dictionary to include new event
 
 
 def remove_event():
@@ -329,37 +337,6 @@ def clear_calendar():
                     continue
 
 
-# event_id_dict = build_event_id_dictionary()
-
-# def test_list():
-#     data_hoje = datetime.datetime.now()
-#     data_futuro = datetime.datetime(2028,12,12)
-#     print(data_hoje)
-#     print(data_futuro)
-#     test_var = CALENDAR[data_hoje:data_futuro]
-#     test_get_events = CALENDAR.get_events(data_hoje, data_futuro, order_by='startTime')
-#     #print(test_var)
-#     print(test_get_events)
-#     for event in CALENDAR[data_hoje:data_futuro:'startTime']:
-#         print(event)
-#         print(event.id)
-#         print(event.start)
-#         print("\n\n")
-
-# def new_dictionary():
-#     NOW = datetime.datetime.today()
-#     today = datetime.datetime.combine(NOW, datetime.time.min)
-#     data_futuro = today + relativedelta(years=10)
-#     print(data_futuro)
-#     print(today)
-#     index = 1
-#     dicio = {}
-#     for event in CALENDAR[today:data_futuro:'startTime']:
-#         print(event)
-#         dicio[index] = event.id
-#         index += 1
-#     print(dicio)
-
 def main():
     """
     Run main functions
@@ -376,10 +353,6 @@ def main():
 
 print("Welcome to Calendar")
 print("A Python-based Google Calendar Interface\n")
+print(NOW)
 event_id_dict = build_event_id_dictionary()
 main()
-#test_list()
-#new_dictionary()
-# print(NOW)
-# horain = datetime.time(23,0)
-# datain = datetime.date(2022, 11, 10)
