@@ -2,6 +2,7 @@
 
 # GCalendar-CI
 [Check it out on Heroku](https://gcalendar-ci.herokuapp.com/)
+
 [View the calendar on Google Calendar](https://bit.ly/392Xz9R)
 
 GCalendar-CI is a Python-based command line interface program that enables the user to list, add or remove entries in a calendar. The calendar interfaces with a [public Google Calendar](https://calendar.google.com/calendar/u/0/embed?src=13mu09pc1s201mq40c0e51uics@group.calendar.google.com&ctz=Europe/Dublin).
