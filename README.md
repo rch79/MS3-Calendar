@@ -86,7 +86,7 @@ The interface was designed to be straightforwad and self-explanatory. It consist
 
 ## Data Models
 
-The program relies on a dictionary that is re-generated each time a change is made to the calendar. Each event is assigned an integer as a key. Each key is paired with a unique event id that is automatically generated everyt time a new event is created. The program will iterate through the events that are currently in the calendar (starting from the current date/ time onwards through the following 10 years) and make the key assignments at each iteration, staring with number "1" for the event that is closest to the current date. This key / pair arrangengement works well for task such as "Remove an event", in which a list of events is presented to the user in chronological order. The user in this case will simply input the integer associated with the event, and the integer happens to be the event key.
+The program relies on a dictionary that is re-generated each time a change is made to the calendar. Each event is assigned an integer as a key. Each key is paired with a unique event id that is automatically generated everytime a new event is created. The program will iterate through the events that are currently in the calendar (starting from the current date/ time onwards through the following 10 years) and make the key assignments at each iteration, assigning the number "1" for the event that is closest to the current date, and so on.
 
 Since the dictionary is accessed and modified by more than one menu option, I decided to make it a global variable.
 
@@ -138,7 +138,7 @@ The program was deployed on [Heroku]((https://www.heroku.com/)), using the follo
 - Deploy tab:
   - Deploy method: GitHub
   - Click on "Connect to GitHub"
-  - Select the repository for the program       being deployed
+  - Select the repository for the program being deployed
   - Click on "connect"
   - Select one of the following options:
     - Automatic deploy: Heroku will rebuild the app every time a change is pushed to the GitHub repository
