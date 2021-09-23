@@ -2,6 +2,7 @@
 
 # GCalendar-CI
 [Check it out on Heroku](https://gcalendar-ci.herokuapp.com/)
+[View the calendar on Google Calendar](https://bit.ly/392Xz9R)
 
 GCalendar-CI is a Python-based command line interface program that enables the user to list, add or remove entries in a calendar. The calendar interfaces with a [public Google Calendar](https://calendar.google.com/calendar/u/0/embed?src=13mu09pc1s201mq40c0e51uics@group.calendar.google.com&ctz=Europe/Dublin).
 
@@ -11,6 +12,7 @@ GCalendar-CI is a Python-based command line interface program that enables the u
 - Add or remove events to a Google Calendar
 - View events in the calendar that will happen within 10 years from the curent date
 - Clear all events in the calendar happening within 10 years from the current date
+- View the calendar on the Google Calendar website
 
 
   
@@ -74,7 +76,7 @@ The interface was designed to be straightforwad and self-explanatory. It consist
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
-|See the calendar on the Web|Navigate to the [hyperlink shown at the top of the main menu on a web browser](https://bit.ly/392Xz9R)|Works as expected|
+|See the calendar on the Web|Navigate to the [hyperlink shown at the top of the main menu on a web browser](https://bit.ly/392Xz9R)|Calendar will be displayed on the browser window |Works as expected|
 
 6. I would like to quit the program
 
@@ -108,6 +110,7 @@ No issues were found with the code using the [PEP8 Online Check Tool](http://pep
  - [GitHub Desktop](https://desktop.github.com/) - For uploading code changes to the project GitHub repository when coding was done on Sublime text
  - [Heroku](https://www.heroku.com/) - A cloud application platform used for deployment of the program
  - [Readme.So](https://readme.so/) - A web-based editor for easy README file creation
+ - [bitly](https://bitly.com/) - Used to shorten the Google Calendar URL
 
  ### Python Libraries:
  - [datetime](https://docs.python.org/3/library/datetime.html) - For manipulation of date and time objects
