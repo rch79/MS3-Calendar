@@ -1,4 +1,5 @@
 
+
 # GCalendar-CI
 [Check it out on Heroku](https://gcalendar-ci.herokuapp.com/)
 
@@ -55,28 +56,24 @@ The interface was designed to be straightforwad and self-explanatory. It consist
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
-| Add a new event| Select option "2" on the main menu| Navigate to the Add New Event menu. User will be able to add the event start and end date and time, and the event will be uploaded to the Google Calendar|Works as expected |
+|Add a new event|Select option "2" on the main menu|Navigate to the Add New Event menu. User will be able to add the event start and end date and time, and the event will be uploaded to the Google Calendar|Works as expected|
 
 3. I would like to remove an event from the calendar
-
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 |Remove an event from the calendar|Select option "3" on the main menu|A list of events in the calendar will be displayed. User will type the number corresponding to the event to be deleted. The program will ask the user to confirm the selection. Event will be deleted and removed from the Google Calendar |Works as expected|
 
 4. I would like to clear all the events from the calendar
-
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 |Clear all upcoming events from the calendar|Select option "4" on the main menu|All events ranging from current date through the following 10 years will be deleted|Works as expected|
 
 5. I would like to see the calendar on the Web
-
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 |See the calendar on the Web|Navigate to the [hyperlink shown at the top of the main menu on a web browser](https://bit.ly/392Xz9R)|Works as expected|
 
 6. I would like to quit the program
-
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 |Quit the program|Press "5" on the main menu|Program will shut down|Works as expected|
@@ -86,6 +83,12 @@ The interface was designed to be straightforwad and self-explanatory. It consist
 The program relies on a dictionary that is re-generated each time a change is made to the calendar. Each event is assigned an integer as a key. Each key is paired with a unique event id that is automatically generated everyt time a new event is created. The program will iterate through the events that are currently in the calendar (starting from the current date/ time onwards through the following 10 years) and make the key assignments at each iteration, staring with number "1" for the event that is closest to the current date. This key / pair arrangengement works well for task such as "Remove an event", in which a list of events is presented to the user in chronological order. The user in this case will simply input the integer associated with the event, and the integer happens to be the event key.
 
 Since the dictionary is accessed and modified by more than one menu option, I decided to make it a global variable.
+
+
+## Validation
+### PEP8 Validation
+No issues were found with the code using the [PEP8 Online Check Tool](http://pep8online.com/):
+<img src="https://github.com/rch79/MS3-Calendar/blob/main/assets/images/pep8_validation_screengrab.PNG"></img>
 
 ## Technologies Used
 
@@ -128,7 +131,7 @@ The program was deployed on [Heroku]((https://www.heroku.com/)), using the follo
 - Deploy tab:
   - Deploy method: GitHub
   - Click on "Connect to GitHub"
-  - Select the repository for the program being deployed
+  - Select the repository for the program       being deployed
   - Click on "connect"
   - Select one of the following options:
     - Automatic deploy: Heroku will rebuild the app every time a change is pushed to the GitHub repository
@@ -139,4 +142,3 @@ The program was deployed on [Heroku]((https://www.heroku.com/)), using the follo
 - Code Insitute staff and program materials - always very helpful
 - A huge thank you to my mentor Spence Barriball
  
-
