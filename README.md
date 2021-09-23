@@ -147,6 +147,6 @@ The program was deployed on [Heroku]((https://www.heroku.com/)), using the follo
 - Required Python dependencies were added to the "requirements.txt" file using the "pip freeze > requirements.txt" CLI command on Gitpod. This file is used by Heroku to install the dependencies used in the program
 
 ## Acknowledgements
-- Code Insitute staff and program materials - always very helpful
+- Thank you to the Code Institute staff - their guidance and materials are always top notch!
 - A huge thank you to my mentor Spence Barriball
  
